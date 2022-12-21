@@ -26,6 +26,10 @@ public class Employee {
     @JoinColumn(name="role_id")
     private Role role;
 
+    @ManyToOne
+    @JoinColumn(name = "working_position_id")
+    private WorkingPosition workingPosition;
+
     public Employee(Long id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;
