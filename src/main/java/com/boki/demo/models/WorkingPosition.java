@@ -27,7 +27,7 @@ public class WorkingPosition {
         this.id = id;
         this.name = name;
     }
-    
+
     public WorkingPosition(){}
 
 }
