@@ -6,10 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 
@@ -23,18 +20,21 @@ public class Employee {
 
     @JsonIgnore
     private @Id @GeneratedValue Long id;
-    private String name;
-    private String role;
+    private String firstName;
+    private String lastName;
+    @ManyToOne
+    @JoinColumn(name="role_id")
+    private Role role;
 
-    public Employee(Long id, String name, String role) {
+    public Employee(Long id, String firstName, String lastName) {
         this.id = id;
-        this.name = name;
-        this.role = role;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
-    public Employee(String name, String role) {
-        this.name = name;
-        this.role = role;
+    public Employee(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public Employee() {

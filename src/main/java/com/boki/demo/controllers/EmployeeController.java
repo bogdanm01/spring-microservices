@@ -12,8 +12,8 @@ import java.util.Arrays;
 public class EmployeeController {
 
     private ArrayList<Employee> mockData = new ArrayList<Employee>(Arrays.asList(
-            new Employee(1L, "Marko Petrovic", "Entry level developer"),
-            new Employee(2L, "Petar Markovic", "Junior developer")));
+            new Employee(1L, "Marko", "Petrovic"),
+            new Employee(2L, "Petar", "Markovic")));
 
     @GetMapping("getAllEmpolyees")
     @ResponseStatus(HttpStatus.OK)
