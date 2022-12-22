@@ -3,6 +3,7 @@ package com.boki.demo.controllers;
 import com.boki.demo.dtos.EmployeeOverview;
 import com.boki.demo.models.Employee;
 import com.boki.demo.services.EmployeeService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,8 +29,13 @@ public class EmployeeController {
 
     @GetMapping("getEmployee/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Employee getEmployeeById(@PathVariable int id){
-        return mockData.get(id - 1);
+    public ResponseEntity<?> getEmployeeById(@PathVariable Long id){
+        EmployeeOverview employee = employeeService.getById(id);
+        if(employee != null){
+            return new ResponseEntity<>(employee, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>("Employee with specified id doesn't exist",HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping("insertEmployee")

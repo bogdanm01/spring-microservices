@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -29,5 +30,21 @@ public class EmployeeService {
             employees.add(employeeMapped);
         }
         return employees;
+    }
+
+    public EmployeeOverview getById(Long id){
+        if(employeeRepository.findById(id).isPresent()) {
+            Employee employee = employeeRepository.findById(id).get();
+            EmployeeOverview employeeMapped = new EmployeeOverview();
+            employeeMapped.setId(employee.getId());
+            employeeMapped.setFirstName(employee.getFirstName());
+            employeeMapped.setLastName(employee.getLastName());
+            employeeMapped.setRole(new RoleDetails(employee.getRole().getId(), employee.getRole().getName()));
+            employeeMapped.setWorkingPosition(new WorkingPositionDetails(employee.getWorkingPosition().getId(), employee.getWorkingPosition().getName()));
+            return employeeMapped;
+        }
+        else{
+            return null;
+        }
     }
 }
