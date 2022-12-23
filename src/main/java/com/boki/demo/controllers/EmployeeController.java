@@ -1,6 +1,7 @@
 package com.boki.demo.controllers;
 
 import com.boki.demo.dtos.EmployeeOverview;
+import com.boki.demo.dtos.InsertEmployeeRequest;
 import com.boki.demo.models.Employee;
 import com.boki.demo.services.EmployeeService;
 import com.boki.demo.utils.CustomResponse;
@@ -41,8 +42,9 @@ public class EmployeeController {
     }
 
     @PostMapping("insertEmployee")
-    public ResponseEntity<?> insertEmployee(@RequestBody Employee employee) {
-        // TODO: Implement insert employee endpoint
-        return null;
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<?> insertEmployee(@RequestBody InsertEmployeeRequest employee) {
+        CustomResponse<EmployeeOverview> response = employeeService.insert(employee);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
