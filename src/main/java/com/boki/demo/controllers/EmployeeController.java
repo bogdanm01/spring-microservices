@@ -3,6 +3,7 @@ package com.boki.demo.controllers;
 import com.boki.demo.dtos.EmployeeOverview;
 import com.boki.demo.models.Employee;
 import com.boki.demo.services.EmployeeService;
+import com.boki.demo.utils.CustomResponse;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,19 +24,20 @@ public class EmployeeController {
 
     @GetMapping("getAllEmployees")
     @ResponseStatus(HttpStatus.OK)
-    public ArrayList<EmployeeOverview> getAllEmployees() {
-        return employeeService.getAll();
+    public ResponseEntity<?> getAllEmployees() {
+        CustomResponse<ArrayList<EmployeeOverview>> response = employeeService.getAll();
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("getEmployee/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> getEmployeeById(@PathVariable Long id){
-        EmployeeOverview employee = employeeService.getById(id);
-        if(employee != null){
-            return new ResponseEntity<>(employee, HttpStatus.OK);
+        CustomResponse<EmployeeOverview> response = employeeService.getById(id);
+        if(response.succeeded){
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
 
-        return new ResponseEntity<>("Employee with specified id doesn't exist",HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping("insertEmployee")
